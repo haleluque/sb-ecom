@@ -1,4 +1,4 @@
-package com.haleluque.ecommerce.sb_ecom;
+package com.haleluque.ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

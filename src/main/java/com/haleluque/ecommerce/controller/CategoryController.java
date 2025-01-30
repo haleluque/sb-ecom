@@ -1,6 +1,7 @@
 package com.haleluque.ecommerce.controller;
 
-import com.haleluque.ecommerce.model.Category;
+import com.haleluque.ecommerce.dto.CategoryDTO;
+import com.haleluque.ecommerce.dto.CategoryResponse;
 import com.haleluque.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static com.haleluque.ecommerce.config.AppConstants.*;
 
 @RestController
 @RequestMapping("/api")
@@ -22,21 +23,26 @@ public class CategoryController {
     }
 
     @GetMapping("/public/categories")
-    public ResponseEntity<List<Category>> getAllCategories(){
-        List<Category> categories = categoryService.getAllCategories();
+    public ResponseEntity<CategoryResponse> getAllCategories(
+            @RequestParam(name = "pageNumber", defaultValue = PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(name = "sortBy", defaultValue = SORT_CATEGORIES_BY, required = false) String sortBy,
+            @RequestParam(name = "sortOrder", defaultValue = SORT_DIRECTION, required = false) String sortOrder
+    ){
+        CategoryResponse categories = categoryService.getAllCategories(pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/public/categories")
-    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category){
-        categoryService.createCategory(category);
-        return new ResponseEntity<>("Category added successfully", HttpStatus.CREATED);
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO saved = categoryService.createCategory(categoryDTO);
+        return new ResponseEntity<>("Category with id " + saved.getCategoryId()  +" added successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/public/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@Valid @RequestBody Category category,
+    public ResponseEntity<String> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO,
                                                  @PathVariable Long categoryId){
-        Category savedCategory = categoryService.updateCategory(category, categoryId);
+        categoryService.updateCategory(categoryDTO, categoryId);
         return new ResponseEntity<>("Category with id " + categoryId +" updated successfully", HttpStatus.OK);
     }
 

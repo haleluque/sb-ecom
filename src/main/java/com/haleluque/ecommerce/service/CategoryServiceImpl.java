@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.haleluque.ecommerce.utils.PagingUtils.getSortByAndOrder;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -26,10 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
-
-        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ?
-                Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+        Sort sortByAndOrder = getSortByAndOrder(sortBy, sortOrder);
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);

@@ -13,5 +13,5 @@ public class UserInfoResponse {
     private Long id;
     private String username;
     private List<String> roles;
-    private String jwtToken;
+    //private String jwtToken; //No longer needed as we implemented cookie based auth
 }

@@ -17,6 +17,6 @@ This is a fully built Spring boot application example for internet sales.
 - REST implementation, using the basic verbs.
 - Exception handling through @RestControllerAdviser and custom exception handling.
 - Logging implementation, using slf4j
-- Spring Security implementation, with a custom authenticator using JWT
+- Spring Security implementation, with a custom authenticator using JWT. Cookie based authentication as well implemented
 - Use of atomic transactions with @Transactional
 

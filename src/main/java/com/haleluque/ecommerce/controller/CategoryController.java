@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.haleluque.ecommerce.config.AppConstants.*;
@@ -22,6 +23,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = PAGE_NUMBER, required = false) Integer pageNumber,
@@ -33,12 +35,14 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/public/categories")
     public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
         CategoryDTO saved = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>("Category with id " + saved.getCategoryId()  +" added successfully", HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO,
                                                  @PathVariable Long categoryId){
@@ -46,6 +50,7 @@ public class CategoryController {
         return new ResponseEntity<>("Category with id " + categoryId +" updated successfully", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
         String status = categoryService.deleteCategory(categoryId);

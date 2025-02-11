@@ -1,8 +1,13 @@
 package com.haleluque.ecommerce.service;
 
 import com.haleluque.ecommerce.dto.CartDTO;
-import org.springframework.security.core.Authentication;
+
+import java.util.List;
 
 public interface CartService {
-    CartDTO addProductToCart(Long productId, Integer quantity, Authentication authentication);
+    List<CartDTO> getAllCarts();
+    CartDTO getCartByLoggedUser();
+    CartDTO addProductToCart(Long productId, Integer quantity);
+    CartDTO updateProductQuantityInCart(Long productId, Integer quantity);
+    String deleteProductFromCart(Long cartId, Long productId);
 }

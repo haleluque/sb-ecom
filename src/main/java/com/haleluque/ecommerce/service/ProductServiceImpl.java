@@ -2,10 +2,12 @@ package com.haleluque.ecommerce.service;
 
 import com.haleluque.ecommerce.dto.ProductDTO;
 import com.haleluque.ecommerce.dto.ProductResponse;
+import com.haleluque.ecommerce.exceptions.ApiException;
 import com.haleluque.ecommerce.exceptions.ProductException;
 import com.haleluque.ecommerce.exceptions.ResourceNotFoundException;
 import com.haleluque.ecommerce.model.Category;
 import com.haleluque.ecommerce.model.Product;
+import com.haleluque.ecommerce.repositories.CartItemRepository;
 import com.haleluque.ecommerce.repositories.CategoryRepository;
 import com.haleluque.ecommerce.repositories.ProductRepository;
 import org.modelmapper.ModelMapper;
@@ -37,6 +39,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @Value("${project.image}")
     private String path;
@@ -113,6 +118,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String deleteProduct(Long productId) {
+        //validate if exist any cartProduct with that product
+        if(cartItemRepository.countByProductId(productId) > 0)
+            throw new ApiException("The product with id: " + productId + " has one or many shopping carts associated");
         Product product = findProductById(productId);
         productRepository.delete(product);
         return "Product with id: " + productId + " deleted successfully !!";

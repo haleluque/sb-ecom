@@ -13,5 +13,5 @@ import java.util.List;
 public class CartDTO {
     private Long cartId;
     private Double totalPrice;
-    private List<CartItemDTO> cartItems = new ArrayList<>();
+    private List<ProductDTO> productDTOS = new ArrayList<>();
 }

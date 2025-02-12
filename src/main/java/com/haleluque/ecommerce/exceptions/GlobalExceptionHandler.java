@@ -1,6 +1,7 @@
 package com.haleluque.ecommerce.exceptions;
 
 import com.haleluque.ecommerce.dto.APIResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,7 +22,7 @@ public class GlobalExceptionHandler {
         Map<String, String> response = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(err -> {
-                    String fieldName = ((FieldError)err).getField();
+                    String fieldName = ((FieldError) err).getField();
                     String message = err.getDefaultMessage();
                     response.put(fieldName, message);
                 });
@@ -48,5 +49,13 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         APIResponse apiResponse = new APIResponse(message, false);
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    // Generic exception handler for all uncaught exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIResponse> handleAllExceptions(Exception e) {
+        String message = "An unexpected error occurred: " + e.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

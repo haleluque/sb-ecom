@@ -17,4 +17,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE carts SET total_price=:totalPrice WHERE cart_id=:cartId")
     void updateCartItemTotalPrice(Long cartId, Double totalPrice);
+
+    @Query("SELECT c FROM Cart c WHERE c.user.email = ?1")
+    Cart findCartByEmail(String email);
 }

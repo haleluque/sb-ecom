@@ -7,7 +7,6 @@ import com.haleluque.ecommerce.repositories.RoleRepository;
 import com.haleluque.ecommerce.repositories.UserRepository;
 import com.haleluque.ecommerce.security.jwt.AuthEntryPointJwt;
 import com.haleluque.ecommerce.security.jwt.AuthTokenFilter;
-import com.haleluque.ecommerce.security.jwt.CustomExceptionFilter;
 import com.haleluque.ecommerce.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -84,7 +83,6 @@ public class WebSecurityConfig {
                                 .requestMatchers("/images/**").permitAll()
                                 .anyRequest().authenticated()
                 );
-        http.addFilterBefore(new CustomExceptionFilter(), UsernamePasswordAuthenticationFilter.class);
         http.authenticationProvider(authenticationProvider()); //custom auth dao provider
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class); //custom filter
         http.headers(headers -> headers

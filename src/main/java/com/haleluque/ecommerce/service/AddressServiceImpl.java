@@ -3,7 +3,6 @@ package com.haleluque.ecommerce.service;
 import com.haleluque.ecommerce.dto.AddressDTO;
 import com.haleluque.ecommerce.exceptions.ResourceNotFoundException;
 import com.haleluque.ecommerce.model.Address;
-import com.haleluque.ecommerce.model.Category;
 import com.haleluque.ecommerce.model.User;
 import com.haleluque.ecommerce.repositories.AddressRepository;
 import com.haleluque.ecommerce.utils.AuthUtil;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AddressServiceImpl implements AddressService {

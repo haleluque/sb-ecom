@@ -1,9 +1,6 @@
 package com.haleluque.ecommerce.controller;
 
 import com.haleluque.ecommerce.dto.AddressDTO;
-import com.haleluque.ecommerce.dto.CartDTO;
-import com.haleluque.ecommerce.dto.CategoryDTO;
-import com.haleluque.ecommerce.dto.ProductDTO;
 import com.haleluque.ecommerce.service.AddressService;
 import com.haleluque.ecommerce.utils.AuthUtil;
 import jakarta.validation.Valid;

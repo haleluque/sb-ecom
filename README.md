@@ -20,3 +20,11 @@ This is a fully built Spring boot application example for internet sales.
 - Spring Security implementation, with a custom authenticator using JWT. Cookie based authentication as well implemented
 - Use of atomic transactions with @Transactional
 
+
+## Set up 
+In order to set up this project and test it locally pls:
+- Clone the project
+- In the application.properties change the database credentials to access ur local database
+- Import the postman collection 
+- Use maven commands to install dependencies 
+
